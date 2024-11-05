@@ -48,6 +48,12 @@ public class PositionService {
     }
 
 
+    // Method to get positions by department Id
+    public List<Position> findByDepartmentId(Long departmentId) {
+        // Calls the repository to find positions based on department Id
+        return positionRepository.findByDepartmentId(departmentId);
+    }
+
 
 
     //Position update
