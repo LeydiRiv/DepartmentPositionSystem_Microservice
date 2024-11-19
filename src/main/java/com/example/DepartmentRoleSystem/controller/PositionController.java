@@ -44,5 +44,12 @@ public class PositionController {
     }
 
 
+    // Endpoint to get positions by a specific deparment ID
+    @GetMapping("/department/{departmentId}")
+    public List<Position> getPositionsByDepartment(@PathVariable Long departmentId) {
+        return positionService.findByDepartmentId(departmentId); // Calls the service to get positions for the requested department
+    }
+
+
 
 }
