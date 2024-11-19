@@ -27,19 +27,22 @@ public class PositionService {
     }
 
 
-
-
     //Position registration
     public Position registerPosition(Position position) {
+
+        if(position.getName() == null || position.getName().isEmpty()){
+            throw new RuntimeException("Error: The position name cannot be null or empty.");
+        }
+
         // Check if the department exists before creating a position
         if (position.getDepartment() != null) {
             Long departmentId = position.getDepartment().getId();
 
             Department department = departmentRepository.findById(departmentId).orElse(null);
 
-            //If the department doesn't exist, throw an exception
+            // Throw an exception if the specified department does not exist
             if (department == null) {
-                throw new RuntimeException("Department does not exist");
+                throw new RuntimeException("Error: The specified department does not exist.");
             }
             //Assign the found deparment to the position
             position.setDepartment(department);
@@ -55,18 +58,18 @@ public class PositionService {
     }
 
 
-
     //Position update
     public Position updatePosition (Long id, Position updatePosition){
-        Position position = positionRepository.findById(id).orElseThrow(() -> new RuntimeException("Position does not exist"));
+       if (updatePosition.getName() == null || updatePosition.getName().isEmpty()){
+            throw new RuntimeException("Error: The position name cannot be null or empty");
+       }
+
+        Position position = positionRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Error: The specified position does not exist"));
 
         position.setName(updatePosition.getName());
         return positionRepository.save(position);
     }
-
-
-
-
 
     //Position delete
     public void deletePosition(Long id) {

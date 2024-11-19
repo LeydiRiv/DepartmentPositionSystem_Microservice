@@ -22,14 +22,21 @@ public class DepartmentService {
 
     //Department registration
     public Department registerDepartment(Department department) {
+        if (department.getName() == null || department.getName().isEmpty()){
+            throw  new RuntimeException("Error: The department name cannot be null or empty.");
+        }
         return departmentRepository.save(department);
     }
 
 
     //Department update
     public Department updateDepartment(Long id, Department updatedDepartment) {
+        if (updatedDepartment.getName() == null || updatedDepartment.getName().isEmpty()){
+            throw  new RuntimeException("Error: The department name cannot be null or empty.");
+        }
+
         Department department = departmentRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Department does not exist"));
+                .orElseThrow(() -> new RuntimeException("Error: The specified department does not exist."));
 
         department.setName(updatedDepartment.getName());
         return departmentRepository.save(department);
@@ -40,6 +47,7 @@ public class DepartmentService {
     public void deleteDepartment(Long id) {
         departmentRepository.deleteById(id);
     }
+
 
 
 }
